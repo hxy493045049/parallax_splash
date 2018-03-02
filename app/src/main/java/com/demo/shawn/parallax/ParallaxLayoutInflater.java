@@ -25,16 +25,17 @@ public class ParallaxLayoutInflater extends LayoutInflater {
 
     @Override
     public LayoutInflater cloneInContext(Context newContext) {
-        return new ParallaxLayoutInflater(this,newContext,fragment);
+        return new ParallaxLayoutInflater(this, newContext, fragment);
     }
 
-    class ParallaxFactory implements LayoutInflater.Factory{
+    class ParallaxFactory implements LayoutInflater.Factory {
 
         private LayoutInflater inflater;
         private final String[] sClassPrefix = {
                 "android.widget.",
                 "android.view."
         };
+
         public ParallaxFactory(LayoutInflater inflater) {
             this.inflater = inflater;
         }
@@ -45,15 +46,15 @@ public class ParallaxLayoutInflater extends LayoutInflater {
                                  AttributeSet attrs) {
             View view = null;
             if (view == null) {
-                view = createViewOrFailQuietly(name,context,attrs);
+                view = createViewOrFailQuietly(name, context, attrs);
             }
 
             //实例化完成
             if (view != null) {
                 //获取自定义属性，通过标签关联到视图上
-                setViewTag(view,context,attrs);
+                setViewTag(view, context, attrs);
                 fragment.getParallaxViews().add(view);
-                Log.d("ricky", "view:"+view);
+                Log.d("ricky", "view:" + view);
             }
 
             return view;
@@ -82,14 +83,14 @@ public class ParallaxLayoutInflater extends LayoutInflater {
                 tag.yOut = a.getFloat(5, 0f);
 
                 //index
-                view.setTag(R.id.parallax_view_tag,tag);
+                view.setTag(R.id.parallax_view_tag, tag);
             }
 
             a.recycle();
 
         }
 
-        private View createViewOrFailQuietly(String name, String prefix,Context context,
+        private View createViewOrFailQuietly(String name, String prefix, Context context,
                                              AttributeSet attrs) {
             try {
                 //通过系统的inflater创建视图，读取系统的属性
@@ -103,7 +104,7 @@ public class ParallaxLayoutInflater extends LayoutInflater {
                                              AttributeSet attrs) {
             //1.自定义控件标签名称带点，所以创建时不需要前缀
             if (name.contains(".")) {
-                createViewOrFailQuietly(name, null, context, attrs);
+                return createViewOrFailQuietly(name, null, context, attrs);
             }
             //2.系统视图需要加上前缀
             for (String prefix : sClassPrefix) {
@@ -112,8 +113,8 @@ public class ParallaxLayoutInflater extends LayoutInflater {
                     return view;
                 }
             }
-
             return null;
+
         }
 
     }

@@ -33,7 +33,7 @@ public class ParallaxFragment extends Fragment {
         //4.获取视图相关的自定义属性的值
         ParallaxLayoutInflater inflater = new ParallaxLayoutInflater(original, getActivity(),this);
 
-        return original.inflate(layoutId, null);
+        return inflater.inflate(layoutId, null);
     }
 
 
